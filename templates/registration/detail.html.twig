@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Mon profile</h1>
+
+    <form action="update.php" method="post">
+        <p>Mon pseudo : <input class="no_update" type="text" readonly="readonly" name="nom" value="{{ user.username }}" /></p>
+        <p>Mon email : <input class="no_update" type="text" readonly="readonly" name="age" value="{{ user.email }}" /></p>
+        <p>Ma date de naissance : <input class="no_update" type="text" readonly="readonly" name="age" value="{{ user.profil.dateOfBirth | date("d/m/Y") }}" /></p>
+        <p>Mon code postal : <input type="text" name="age" value="{{ user.profil.postcode }}" /></p>
+        <p>Ma ville : <input type="text" name="age" value="{{ user.profil.city }}" /></p>
+
+        <p><input type="submit" value="Mettre à jour"></p>
+    </form>
+
+
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+

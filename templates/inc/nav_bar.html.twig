@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="{{ path('main_home') }}">Dating</a>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{ path('main_home') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">profile visualizations</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('main_cgu') }}" tabindex="-1" aria-disabled="true">CGU</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Legal notice</a>
+                </li>
+            </ul>
+
+            {% if app.user == "" %}
+                <form class="d-flex">
+                    <button class="btn btn-outline-success mx-1"><a href="{{ path('registration_register') }}">Register</a></button>
+                    <button class="btn btn-outline-success"><a href="{{ path('app_login') }}">Log In</a></button>
+                </form>
+            {% else %}
+                <form class="d-flex">
+                    <button class="btn btn-outline-success mx-1"><a href="{{ path('registration_profil_detail', {id: app.user.id}) }}">My Profile</a></button>
+                    <button class="btn btn-outline-success"><a href="{{ path('app_logout') }}">Log Out</a></button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+</nav>
