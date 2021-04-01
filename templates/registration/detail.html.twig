@@ -13,6 +13,13 @@
         <p><input type="submit" value="Mettre à jour"></p>
     </form>
 
+    {{ form_start(detailForm) }}
+        {{ form_row((detailForm.user.username)) }}
+        {{ form_row((detailForm.user.email)) }}
+        {{ form_row((detailForm.profil.DateOfBirth)) }}
+        {{ form_row((detailForm.profil.city)) }}
+    {{ form_end(detailForm, {render_rest:false}) }}
+
 
 {% endblock %}
 

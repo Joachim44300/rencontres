@@ -11,13 +11,15 @@ class DetailFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username')
-            ->add('email')
-            ->add('DateOfBirth')
-            ->add('sex')
-            ->add('postcode')
-            ->add('city')
-            ->add('dateCreated')
+            ->add('user', RegistrationFormType::class, [
+                'disabled' => 'email'
+            ])
+            ->add('profil', ProfilFormType::class, [
+
+            ])
+            //->get('profil')->get('DateOfBirth')->setDisabled(true)
+            ->get('profil')->get('city')->setDisabled(true)
+
         ;
     }
 

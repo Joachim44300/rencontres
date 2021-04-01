@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Profil;
 use App\Entity\User;
+use App\Form\DetailFormType;
 use App\Form\ProfilFormType;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
@@ -61,8 +62,6 @@ class RegistrationController extends AbstractController
      */
     public function registerProfil( Request $request, EntityManagerInterface $entityManager, UserInterface $user):Response
     {
-        $user->getUsername();
-
         // Crée une instance de l'entité que le form sert à créer
         $profil = new Profil();
         // Crée une instance de la classe de formulaire que l'on assicie à notre formulaire
@@ -92,12 +91,34 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register/profil/{id}", name="registration_profil_detail")
      */
-    public function ProfilDetail($id, UserRepository $userRepository) : Response
+    public function ProfilDetail($id, UserRepository $userRepository, Request $request, EntityManagerInterface $entityManager) : Response
     {
         $user = $userRepository->find($id);
 
+        // Crée une instance de l'entité que le form sert à créer
+        $userInfo = new User();
+        $profilInfo = new Profil();
+
+        // on injecte des données
+        $currentUsername = $this->getUser()->getUsername();
+        $currentEmail = $this->getUser()->getEmail();
+        $currentDate = $this->getUser()->getProfil()->getDateOfBirth();
+        $currentCity = $this->getUser()->getProfil()->getCity();
+        $userInfo->setUsername($currentUsername);
+        $userInfo->setEmail($currentEmail);
+        $profilInfo->setDateOfBirth($currentDate);
+        $profilInfo->setCity($currentCity);
+
+
+        // Crée une instance de la classe de formulaire que l'on assicie à notre formulaire
+        $detailForm = $this->createForm(DetailFormType::class, ['user' => $userInfo, 'profil' => $profilInfo]);
+
+        // On prend les données du formulaire soumis, et les injecte dans mon $profil
+        $detailForm->handleRequest($request);
+
         return $this->render('registration/detail.html.twig', [
                 'user' => $user,
+                'detailForm' => $detailForm->createView(),
         ]);
     }
 }
